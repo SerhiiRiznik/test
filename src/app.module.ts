@@ -6,12 +6,14 @@ import AppService from './app.service';
 import ExampleUserModule from './modules/example-user/example.user.module';
 import { dataSourceOptions } from './common/db/datasource';
 import ExampleUserController from './modules/example-user/example.user.controller';
+import ComplianceModule from './modules/compliance/compliance.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(dataSourceOptions),
     ExampleUserModule,
+    ComplianceModule,
   ],
   controllers: [AppController, ExampleUserController],
   providers: [AppService],
