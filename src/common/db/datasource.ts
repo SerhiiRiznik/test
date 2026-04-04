@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import ExampleUser from './entities/example.user.entity';
 import { NODE_ENV } from '../constants';
 import ComplianceSelection from './entities/compliance-selection.entity';
-import ComplianceFramework from './entities/compliance-framework.entity';
 
 config();
 const configService = new ConfigService();
@@ -16,7 +15,7 @@ export const dataSourceOptions: DataSourceOptions = {
   username: configService.getOrThrow<string>('DB_USERNAME'),
   password: configService.getOrThrow<string>('DB_PASSWORD'),
   database: configService.getOrThrow<string>('DB_NAME'),
-  entities: [ExampleUser, ComplianceFramework, ComplianceSelection],
+  entities: [ExampleUser, ComplianceSelection],
   migrations:
     configService.getOrThrow<string>('NODE_ENV') === NODE_ENV.PRODUCTION
       ? ['dist/migrations/*.js']

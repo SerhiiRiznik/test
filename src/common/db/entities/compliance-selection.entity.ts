@@ -1,14 +1,11 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
+  Entity,
   Index,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import ComplianceFramework from './compliance-framework.entity';
 
 @Entity({ name: 'compliance_selections' })
 export default class ComplianceSelection {
@@ -19,12 +16,8 @@ export default class ComplianceSelection {
   @Column({ type: 'varchar', length: 255 })
   userId: string;
 
-  @Column({ type: 'varchar', length: 36 })
-  frameworkId: string;
-
-  @ManyToOne(() => ComplianceFramework, { eager: true, nullable: false })
-  @JoinColumn({ name: 'frameworkId', referencedColumnName: 'uuid' })
-  framework: ComplianceFramework;
+  @Column({ type: 'varchar', length: 50 })
+  frameworkCode: string;
 
   @CreateDateColumn({ type: 'datetime', precision: 6 })
   createdAt: Date;

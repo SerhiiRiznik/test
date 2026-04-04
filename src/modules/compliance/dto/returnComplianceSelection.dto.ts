@@ -8,9 +8,13 @@ export default class ReturnComplianceSelectionDto {
   @ApiProperty({ example: 'user-123' })
   userId: string;
 
-  @ApiProperty({ example: 'framework-uuid-123' })
-  frameworkId: string;
+  @ApiProperty({ example: 'HIPAA_US' })
+  frameworkCode: string;
 
-  @ApiProperty({ type: ReturnComplianceFrameworkDto })
-  framework: ReturnComplianceFrameworkDto;
+  @ApiProperty({
+    type: ReturnComplianceFrameworkDto,
+    nullable: true,
+    required: false,
+  })
+  framework?: ReturnComplianceFrameworkDto | null;
 }

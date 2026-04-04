@@ -1,9 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export default class ReturnComplianceFrameworkDto {
-  @ApiProperty({ example: 'uuid-123' })
-  uuid: string;
-
   @ApiProperty({ example: 'HIPAA_US' })
   code: string;
 

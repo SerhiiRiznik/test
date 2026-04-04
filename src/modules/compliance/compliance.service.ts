@@ -6,10 +6,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import ComplianceFramework from '../../common/db/entities/compliance-framework.entity';
 import ComplianceSelection from '../../common/db/entities/compliance-selection.entity';
-
 import SelectComplianceDto from './dto/selectCompliance.dto';
+import { COMPLIANCE_FRAMEWORKS } from './constants/complianceFrameworks';
 
 const FRAMEWORK_NOT_FOUND_MESSAGE = 'Compliance framework not found';
 const COMPLIANCE_FETCH_FAILED_MESSAGE = 'Failed to fetch compliance frameworks';
@@ -22,18 +21,14 @@ const COMPLIANCE_GET_SELECTION_FAILED_MESSAGE =
 @Injectable()
 export default class ComplianceService {
   constructor(
-    @InjectRepository(ComplianceFramework)
-    private readonly complianceFrameworkRepository: Repository<ComplianceFramework>,
     @InjectRepository(ComplianceSelection)
     private readonly complianceSelectionRepository: Repository<ComplianceSelection>,
   ) {}
 
-  async getFrameworks(): Promise<ComplianceFramework[]> {
+  // eslint-disable-next-line class-methods-use-this
+  async getFrameworks() {
     try {
-      return await this.complianceFrameworkRepository.find({
-        where: { isActive: true },
-        order: { name: 'ASC' },
-      });
+      return COMPLIANCE_FRAMEWORKS.filter((framework) => framework.isActive);
     } catch {
       throw new InternalServerErrorException(COMPLIANCE_FETCH_FAILED_MESSAGE);
     }
@@ -43,12 +38,9 @@ export default class ComplianceService {
     dto: SelectComplianceDto,
   ): Promise<ComplianceSelection> {
     try {
-      const framework = await this.complianceFrameworkRepository.findOne({
-        where: {
-          code: dto.frameworkCode,
-          isActive: true,
-        },
-      });
+      const framework = COMPLIANCE_FRAMEWORKS.find(
+        (item) => item.code === dto.frameworkCode && item.isActive,
+      );
 
       if (!framework) {
         throw new NotFoundException(FRAMEWORK_NOT_FOUND_MESSAGE);
@@ -60,14 +52,14 @@ export default class ComplianceService {
         });
 
       if (existingSelection) {
-        existingSelection.frameworkId = framework.uuid;
+        existingSelection.frameworkCode = framework.code;
 
         return await this.complianceSelectionRepository.save(existingSelection);
       }
 
       const selection = this.complianceSelectionRepository.create({
         userId: dto.userId,
-        frameworkId: framework.uuid,
+        frameworkCode: framework.code,
       });
 
       return await this.complianceSelectionRepository.save(selection);
@@ -82,7 +74,7 @@ export default class ComplianceService {
     }
   }
 
-  async getSelection(userId: string): Promise<ComplianceSelection> {
+  async getSelection(userId: string) {
     try {
       const selection = await this.complianceSelectionRepository.findOne({
         where: { userId },
@@ -92,7 +84,14 @@ export default class ComplianceService {
         throw new NotFoundException(COMPLIANCE_SELECTION_NOT_FOUND);
       }
 
-      return selection;
+      const framework = COMPLIANCE_FRAMEWORKS.find(
+        (item) => item.code === selection.frameworkCode,
+      );
+
+      return {
+        ...selection,
+        framework: framework ?? null,
+      };
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
