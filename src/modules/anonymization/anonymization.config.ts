@@ -1,8 +1,8 @@
 import { registerAs } from '@nestjs/config';
 
 const anonymizationConfig = registerAs('anonymization', () => ({
-  presidioAnalyzeUrl: process.env.PRESIDIO_ANALYZE_URL ?? '',
-  presidioAnonymizeUrl: process.env.PRESIDIO_ANONYMIZE_URL ?? '',
+  presidioAnalyzeUrl: process.env.PRESIDIO_ANALYZER_URL ?? '',
+  presidioAnonymizeUrl: process.env.PRESIDIO_ANONYMIZER_URL ?? '',
 }));
 
 export default anonymizationConfig;
