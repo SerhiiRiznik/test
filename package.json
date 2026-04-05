@@ -23,7 +23,11 @@
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
     "migration:show": "npm run typeorm -- migration:show",
-    "prepare": "husky"
+    "prepare": "husky",
+    "infrastructure:up": "docker compose up -d",
+    "infrastructure:down": "docker compose down",
+    "infrastructure:start": "docker compose start",
+    "infrastructure:stop": "docker compose stop"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
