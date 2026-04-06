@@ -20,6 +20,12 @@ The module is automatically configured. Just add the required environment variab
 - ~~**HIPAA**: Health Insurance Portability and Accountability Act (US)~~ (strategy to be implemented)
 - ~~**FADP**: Federal Act on Data Protection(Switzerland)~~ (strategy to be implemented)
 
+## Diagrams
+
+### Deployment Diagram
+
+<img width="913" height="699" alt="Image" src="https://github.com/user-attachments/assets/38ca573a-2ad5-4c77-8ba4-b05b54e0ad44" />
+
 ## Usage Examples
 
 ```typescript
