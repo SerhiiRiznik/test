@@ -2,7 +2,6 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
 import { ConfigService } from '@nestjs/config';
 import ExampleUser from './entities/example.user.entity';
-import { NODE_ENV } from '../constants';
 import ComplianceSelection from './entities/compliance-selection.entity';
 
 config();
@@ -16,10 +15,7 @@ export const dataSourceOptions: DataSourceOptions = {
   password: configService.getOrThrow<string>('DB_PASSWORD'),
   database: configService.getOrThrow<string>('DB_NAME'),
   entities: [ExampleUser, ComplianceSelection],
-  migrations:
-    configService.getOrThrow<string>('NODE_ENV') === NODE_ENV.PRODUCTION
-      ? ['dist/migrations/*.js']
-      : ['src/migrations/*.ts'],
+  migrations: ['dist/migrations/*.js'],
   synchronize: false,
   logging: false,
 };
