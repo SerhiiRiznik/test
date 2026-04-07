@@ -19,7 +19,7 @@ export const dataSourceOptions: DataSourceOptions = {
   migrations:
     configService.getOrThrow<string>('NODE_ENV') === NODE_ENV.PRODUCTION
       ? ['dist/migrations/*.js']
-      : [],
+      : ['src/migrations/*.ts'],
   synchronize: false,
   logging: false,
 };
