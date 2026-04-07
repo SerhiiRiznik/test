@@ -23,9 +23,14 @@
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
     "migration:show": "npm run typeorm -- migration:show",
-    "prepare": "husky"
+    "prepare": "husky",
+    "infrastructure:up": "docker compose up -d",
+    "infrastructure:down": "docker compose down",
+    "infrastructure:start": "docker compose start",
+    "infrastructure:stop": "docker compose stop"
   },
   "dependencies": {
+    "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.1",
@@ -34,6 +39,7 @@
     "@nestjs/testing": "^11.0.1",
     "@nestjs/typeorm": "^11.0.0",
     "@types/supertest": "^6.0.2",
+    "axios": "^1.14.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.4",
     "dotenv": "^17.3.1",
