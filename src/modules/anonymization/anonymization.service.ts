@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
+import { Compliance } from '@common/constants';
 import AbstractAnonymizerService from './abstract-anonymizer.service';
 import ANONYMIZER_SERVICES_TOKEN from './anonymizer-services.token';
-import { Compliance } from '../../common/constants';
 import AnonymizerNotFoundError from './anonymizer-not-found.error';
 
 export default class AnonymizationService {

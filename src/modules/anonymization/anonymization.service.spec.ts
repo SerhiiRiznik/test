@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Compliance } from '@common/constants';
 import AnonymizationService from './anonymization.service';
 import AbstractAnonymizerService from './abstract-anonymizer.service';
 import ANONYMIZER_SERVICES_TOKEN from './anonymizer-services.token';
-import { Compliance } from '../../common/constants';
 import AnonymizerNotFoundError from './anonymizer-not-found.error';
 
 describe('AnonymizationService (unit)', () => {
