@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-import { Compliance } from '../../common/constants';
+import { Compliance } from '@common/constants';
 import AbstractAnonymizerService from './abstract-anonymizer.service';
 import anonymizationConfig from './anonymization.config';
 import type { AnonymizationConfig } from './anonymization.config';

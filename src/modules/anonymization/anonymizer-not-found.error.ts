@@ -1,4 +1,4 @@
-import { Compliance } from '../../common/constants';
+import { Compliance } from '@common/constants';
 
 export default class AnonymizerNotFoundError extends Error {
   constructor(complianceName: Compliance) {

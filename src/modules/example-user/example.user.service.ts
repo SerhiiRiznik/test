@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import isMySqlError from '../../common/utils/isMySqlError';
-import ExampleUser from '../../common/db/entities/example.user.entity';
+import isMySqlError from '@common/utils/isMySqlError';
+import ExampleUser from '@common/db/entities/example.user.entity';
 
 @Injectable()
 export default class ExampleUserService {

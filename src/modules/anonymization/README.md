@@ -30,7 +30,7 @@ The module is automatically configured. Just add the required environment variab
 
 ```typescript
 import AnonymizationService from './anonymization.service';
-import { Compliance } from '../../common/constants';
+import { Compliance } from '@common/constants';
 
 @Injectable()
 export class MyService {
@@ -54,7 +54,7 @@ To add a new anonymization strategy:
 
 ```typescript
 import AbstractAnonymizerService from './abstract-anonymizer.service';
-import { Compliance } from '../../common/constants';
+import { Compliance } from '@common/constants';
 
 export default class CustomAnonymizerService extends AbstractAnonymizerService {
   complianceName: Compliance = Compliance.GDPR; // or add new compliance type

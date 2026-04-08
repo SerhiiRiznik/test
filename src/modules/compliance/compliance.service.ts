@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import ComplianceSelection from '../../common/db/entities/compliance-selection.entity';
+import ComplianceSelection from '@common/db/entities/compliance-selection.entity';
 import SelectComplianceDto from './dto/selectCompliance.dto';
 import { COMPLIANCE_FRAMEWORKS } from './constants/complianceFrameworks';
 
