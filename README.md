@@ -100,11 +100,32 @@ $ npm run test:cov
 
 ## API Endpoints
 
+### Rate Limiting
+
+All endpoints are protected by rate limiting to prevent abuse.
+
+**Global Rules:**
+- 100 requests per hour per IP address
+- Rate limits are tracked per IP, not per user
+
+**Rate Limit Response (429):**
+```json
+{
+  "statusCode": 429,
+  "message": "Too Many Requests"
+}
+```
+
+**Per-Endpoint Overrides:**
+Some endpoints have stricter limits. See endpoint documentation below.
+
 ### Contact Message
 
 Submit a contact us message from the frontend.
 
 **POST** `/contact-messages`
+
+**Rate Limit:** 5 requests per hour per IP address
 
 **Request Body:**
 
@@ -121,21 +142,16 @@ Submit a contact us message from the frontend.
 **Features:**
 
 - ✅ Input validation (email format, required fields, max lengths)
-- ✅ XSS protection (HTML/JS sanitization)
+- ✅ XSS protection (HTML/JS sanitization via sanitize-html)
 - ✅ Rate limiting (5 requests per hour per IP)
-- ✅ Custom error messages
+- ✅ Transaction-safe database operations (all-or-nothing)
+- ✅ Clean, minimal API responses
 
 **Response (201 Created):**
 
 ```json
 {
-  "uuid": "550e8400-e29b-41d4-a716-446655440000",
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "john.doe@example.com",
-  "phoneNumber": "+15550000000",
-  "message": "Your message here",
-  "createdAt": "2026-04-09T10:32:16.000Z"
+  "message": "Contact message created successfully"
 }
 ```
 

@@ -10,7 +10,7 @@ import {
 } from '@nestjs/swagger';
 import ContactMessageService from './contactMessage.service';
 import CreateContactMessageDto from './dto/createContactMessage.dto';
-import ContactMessage from '../../common/db/entities/contactMessage.entity';
+import ContactMessageResponseDto from './dto/contactMessageResponse.dto';
 
 @ApiTags('contact-messages')
 @Controller('contact-messages')
@@ -20,14 +20,16 @@ export default class ContactMessageController {
   @ApiOperation({ summary: 'Submit a contact us message' })
   @ApiCreatedResponse({
     description: 'Contact message successfully submitted',
-    type: ContactMessage,
+    type: ContactMessageResponseDto,
   })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   @ApiTooManyRequestsResponse({ description: 'Too many requests from this IP' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   @Throttle({ default: { limit: 5, ttl: 3600000 } })
   @Post()
-  async create(@Body() body: CreateContactMessageDto): Promise<ContactMessage> {
+  async create(
+    @Body() body: CreateContactMessageDto,
+  ): Promise<ContactMessageResponseDto> {
     return this.contactMessageService.create(body);
   }
 }
