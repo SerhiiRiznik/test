@@ -30,8 +30,8 @@ export default class EmailService {
   async createContactMessage(
     data: ContactMessageInput,
   ): Promise<CreateContactMessageResponse> {
-    return this.emailRepository.manager.transaction(async (tm) => {
-      try {
+    try {
+      return await this.emailRepository.manager.transaction(async (tm) => {
         const sanitizedData = {
           firstName: EmailService.sanitizeInput(data.firstName),
           lastName: EmailService.sanitizeInput(data.lastName),
@@ -69,10 +69,10 @@ export default class EmailService {
         return {
           message: 'Email submission created successfully',
         };
-      } catch (error) {
-        if (error instanceof InternalServerErrorException) throw error;
-        throw new InternalServerErrorException('Failed to create email');
-      }
-    });
+      });
+    } catch (error) {
+      if (error instanceof InternalServerErrorException) throw error;
+      throw new InternalServerErrorException('Failed to create email');
+    }
   }
 }
