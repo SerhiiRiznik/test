@@ -9,8 +9,9 @@ import ThrottlerExceptionFilter from './common/filters/throttler-exception.filte
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // temporarelly enable Cors, will be changed in  https://github.com/ZenBit-Tech/green_anonymization_be/pull/4
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: '*',
     credentials: true,
   });
 

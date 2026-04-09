@@ -8,28 +8,28 @@ import {
   ApiTags,
   ApiTooManyRequestsResponse,
 } from '@nestjs/swagger';
-import ContactMessageService from './contactMessage.service';
+import EmailService from './email.service';
 import CreateContactMessageDto from './dto/createContactMessage.dto';
-import ContactMessageResponseDto from './dto/contactMessageResponse.dto';
+import CreateContactMessageResponseDto from './dto/createContactMessageResponse.dto';
 
-@ApiTags('contact-messages')
-@Controller('contact-messages')
-export default class ContactMessageController {
-  constructor(private readonly contactMessageService: ContactMessageService) {}
+@ApiTags('emails')
+@Controller('emails/contact-message')
+export default class EmailController {
+  constructor(private readonly emailService: EmailService) {}
 
-  @ApiOperation({ summary: 'Submit a contact us message' })
+  @ApiOperation({ summary: 'Submit an contact messages' })
   @ApiCreatedResponse({
-    description: 'Contact message successfully submitted',
-    type: ContactMessageResponseDto,
+    description: 'Contact messages successfully submitted',
+    type: CreateContactMessageResponseDto,
   })
   @ApiBadRequestResponse({ description: 'Invalid request body' })
   @ApiTooManyRequestsResponse({ description: 'Too many requests from this IP' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   @Throttle({ default: { limit: 5, ttl: 3600000 } })
   @Post()
-  async create(
+  async createContactMessage(
     @Body() body: CreateContactMessageDto,
-  ): Promise<ContactMessageResponseDto> {
-    return this.contactMessageService.create(body);
+  ): Promise<CreateContactMessageResponseDto> {
+    return this.emailService.createContactMessage(body);
   }
 }

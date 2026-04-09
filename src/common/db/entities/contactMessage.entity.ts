@@ -19,10 +19,10 @@ export default class ContactMessage {
   @Column({ length: 255, nullable: false })
   email!: string;
 
-  @Column({ length: 30, nullable: false })
+  @Column({ length: 15, nullable: false })
   phoneNumber!: string;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({ length: 5000, nullable: false })
   message!: string;
 
   @CreateDateColumn()

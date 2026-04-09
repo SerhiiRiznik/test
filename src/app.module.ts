@@ -6,7 +6,7 @@ import { APP_GUARD } from '@nestjs/core';
 import AppController from './app.controller';
 import AppService from './app.service';
 import ExampleUserModule from './modules/example-user/example.user.module';
-import ContactMessageModule from './modules/contactMessage/contactMessage.module';
+import EmailModule from './modules/email/email.module';
 import { dataSourceOptions } from './common/db/datasource';
 import ExampleUserController from './modules/example-user/example.user.controller';
 import ComplianceModule from './modules/compliance/compliance.module';
@@ -23,7 +23,7 @@ import ComplianceModule from './modules/compliance/compliance.module';
     TypeOrmModule.forRoot(dataSourceOptions),
     ExampleUserModule,
     ComplianceModule,
-    ContactMessageModule,
+    EmailModule,
   ],
   controllers: [AppController, ExampleUserController],
   providers: [

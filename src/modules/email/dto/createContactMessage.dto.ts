@@ -29,7 +29,7 @@ export default class CreateContactMessageDto {
   })
   @IsString()
   @IsNotEmpty()
-  @MaxLength(30)
+  @MaxLength(15)
   phoneNumber!: string;
 
   @ApiProperty({

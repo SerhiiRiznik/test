@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export default class ContactMessageResponseDto {
+export default class CreateContactMessageResponseDto {
   @ApiProperty({
-    example: 'Contact message created successfully',
+    example: 'Message created successfully',
     description: 'Success message',
   })
   message!: string;
