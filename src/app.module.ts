@@ -9,6 +9,7 @@ import ExampleUserModule from './modules/example-user/example.user.module';
 import ContactMessageModule from './modules/contactMessage/contactMessage.module';
 import { dataSourceOptions } from './common/db/datasource';
 import ExampleUserController from './modules/example-user/example.user.controller';
+import ComplianceModule from './modules/compliance/compliance.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import ExampleUserController from './modules/example-user/example.user.controlle
     ]),
     TypeOrmModule.forRoot(dataSourceOptions),
     ExampleUserModule,
+    ComplianceModule,
     ContactMessageModule,
   ],
   controllers: [AppController, ExampleUserController],
