@@ -4,9 +4,15 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 import AppModule from './app.module';
 import { DEFAULT_PORT } from './common/constants';
+import ThrottlerExceptionFilter from './common/filters/throttler-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Anonimizer Backend API')
@@ -28,6 +34,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  app.useGlobalFilters(new ThrottlerExceptionFilter());
 
   await app.listen(configService.getOrThrow<number>('PORT') ?? DEFAULT_PORT);
 }
