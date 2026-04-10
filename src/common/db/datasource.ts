@@ -8,13 +8,38 @@ import ComplianceSelection from '@entities/compliance-selection.entity';
 config();
 const configService = new ConfigService();
 
+// Helper function to parse database URL (for Heroku JAWSDB_URL)
+function getDatabaseConfig() {
+  const jawsdbUrl = configService.get<string>('JAWSDB_URL');
+
+  if (jawsdbUrl) {
+    // Parse mysql://user:pass@host:port/dbname
+    const url = new URL(jawsdbUrl);
+    return {
+      type: 'mysql' as const,
+      host: url.hostname,
+      port: parseInt(url.port, 10) || 3306,
+      username: url.username,
+      password: url.password,
+      database: url.pathname.slice(1), // Remove leading /
+    };
+  }
+
+  // Fallback to individual env variables (for local development)
+  return {
+    type: 'mysql' as const,
+    host: configService.getOrThrow<string>('DB_HOST'),
+    port: configService.getOrThrow<number>('DB_PORT'),
+    username: configService.getOrThrow<string>('DB_USERNAME'),
+    password: configService.getOrThrow<string>('DB_PASSWORD'),
+    database: configService.getOrThrow<string>('DB_NAME'),
+  };
+}
+
+const dbConfig = getDatabaseConfig();
+
 export const dataSourceOptions: DataSourceOptions = {
-  type: 'mysql',
-  host: configService.getOrThrow<string>('DB_HOST'),
-  port: configService.getOrThrow<number>('DB_PORT'),
-  username: configService.getOrThrow<string>('DB_USERNAME'),
-  password: configService.getOrThrow<string>('DB_PASSWORD'),
-  database: configService.getOrThrow<string>('DB_NAME'),
+  ...dbConfig,
   entities: [ExampleUser, ComplianceSelection, ContactMessage],
   migrations: ['dist/migrations/*.js'],
   synchronize: false,
