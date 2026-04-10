@@ -19,37 +19,17 @@ services:
       interval: 10s
       start_period: 40s
 
-  # Ollama (для ML моделей для Presidio Analyzer)
-  ollama:
-    image: ollama/ollama:latest
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    environment:
-      - OLLAMA_HOST=0.0.0.0:11434
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
-      interval: 10s
-      timeout: 10s
-      retries: 30
-      start_period: 60s
-
   # Presidio Analyzer (PII Detection)
   presidio-analyzer:
     image: mcr.microsoft.com/presidio-analyzer:latest
     ports:
       - "3001:3000"
-    environment:
-      - OLLAMA_HOST=http://ollama:11434
-    depends_on:
-      ollama:
-        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   # Presidio Anonymizer (PII Anonymization)
   presidio-anonymizer:
@@ -61,6 +41,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   # NestJS Backend Server
   server:
@@ -98,7 +79,7 @@ services:
       - /app/node_modules
       - /app/dist
     command: npm run start:dev
+    restart: unless-stopped
 
 volumes:
   mysql_data:
-  ollama_data:
